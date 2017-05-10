@@ -20,11 +20,13 @@ Route::group(['prefix' => 'users', 'middleware' => 'jwt.auth'], function () {
     Route::get('/{id}', 'UsersController@show');
     Route::put('/{id}', 'UsersController@update');
     Route::delete('/{id}', 'UsersController@destroy');
+
+    Route::get('/logout', 'Auth\LoginController@logout');
 });
 
 Route::post('/auth', 'Auth\LoginController@authenticate');
+//Route::get('/logout', 'Auth\LoginController@logout');
 Route::post('/register', 'Auth\RegisterController@register');
-
 
 //Route::get('/users', 'UsersController@index');
 //Route::post('/users', 'UsersController@store');

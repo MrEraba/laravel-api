@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 
 class LoginController extends Controller
 {
@@ -51,6 +52,16 @@ class LoginController extends Controller
             return response()->json(['error' => 'could not create token.'], 500);
         }
 
-        return response()->json(compact('token'));
+        return response()->json(compact('token'), 201);
+    }
+
+    public function logout()
+    {
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response(null, 204);
+        } catch (TokenBlacklistedException $e) {
+            return response(null, 204);
+        }
     }
 }

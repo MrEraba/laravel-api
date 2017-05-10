@@ -41,9 +41,10 @@ class UsersController extends Controller
         return Validator::make($data, $rules);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $pagination = 15;
+        $users = User::paginate($pagination);
         return response()->json(compact('users'))->setStatusCode(200);
     }
 
